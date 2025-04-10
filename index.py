@@ -31,7 +31,7 @@ the yield of apples in that region."""
 
 kanto_yield_apples = kanto_temp * w1 + kanto_rainfall * w2 + kanto_humidty * w3 
 
-print(f"The expected yield of apples in Kanto region is {kanto_yield_apples} tons per hectare")
+#print(f"The expected yield of apples in Kanto region is {kanto_yield_apples} tons per hectare")
 
 """To make it slightly easier to perform the above computation for multiple 
 regions, we can represent the climatic data for each region as a vector. i.e a list of numbers"""
@@ -79,20 +79,20 @@ weights = np.array([w1, w2, w3])
 #print(type(weights)) 
 
 """Just like lists, Numpy arrays support the indexing notation []""" 
-print(weights[0])
+#print(weights[0])
 
 """Operating on Numpy Arrays 
 We can compute the dot product of the two vectors using the np.dot function
 """
 #help(np.dot) 
 kanto_yield_apples = np.dot(kanto, weights)
-print(kanto_yield_apples) 
+#print(kanto_yield_apples) 
 
 """We can achieve the same result with lower level operations supported by 
 Numpy arrays; performing an element-wise multiplication and calculating the sum 
 of the resulting numbers.""" 
 kanto_yield_apples = (kanto * weights).sum() 
-print(kanto_yield_apples)
+#print(kanto_yield_apples)
 
 """The * operator performs an element-wise multiplication of the two 
 arrays (assuming they have the same size), and the sum method calculates the 
@@ -219,18 +219,77 @@ download_dataset()
 
 climate_data = np.genfromtxt("data/climate.txt", delimiter=",", skip_header=1) 
 #print(climate_data.shape)
-print(climate_data[0])
+#print(climate_data[0])
 
 """We can now use a matrix multiplication operator @ to predict the yield 
 of apples for the entire dataset using a given set of weights.
 """
 weights = np.array([0.3, 0.2, 0.5]) 
 yields = climate_data @ weights 
-print(yields.shape)
+#print(yields.shape)
 
 """
 We can now add the yields back to the climate_data as a fourth column 
 using the np.concatenate function
 """
 climate_results = np.concatenate((climate_data, yields.reshape(10000, 1)), axis=1)
-print(climate_results)
+#print(climate_results)
+
+"""
+Let's write the final results from our computation above back to 
+a file using the np.savetxt function""" 
+np.savetxt("data/climate_results.txt", 
+           climate_results, 
+           fmt="%.2f", 
+           header="temperature,rainfall,humidity,yield_apples", 
+           comments="") 
+
+"""Numpy provides hundreds of functions for performing operations on 
+arrays. Here are some common functions: 
+* Mathematics: np.sum, np.exp, np.round, arithmetic operations 
+* Array manipulation: np.reshape, np.stack, np.concatenate, np.split
+* Linear Algebra: np.matmul, np.dot, np.transpose, np.eigvals, 
+* Statistics: np.mean, np.median, np.std, np.max 
+"""
+
+
+"""Arithmetic Operations and Broadcasting
+Numpy arrays support arithmetic operators like +, -, *. You 
+can perform an arithmetic operation with a single number (also called a scalar), 
+or with another array of the same shape. This makes it really easy to 
+write mathematical expressions with multi-dimensional arrays. 
+"""
+arr2 = np.array([
+    [1, 2, 3, 4], 
+    [5, 6, 7, 8], 
+    [9, 1, 2, 3]
+]) 
+
+arr3 = np.array([
+    [11, 12, 13, 14], 
+    [15, 16, 17, 18], 
+    [19, 11, 12, 13]
+]) 
+
+"""Adding a scalar"""
+res = arr2 + 3 
+
+"""Element-wise subtraction""" 
+res = arr3 - arr2 
+
+"""Modulus with a scalar"""
+res = arr2 % 4
+
+"""Numpy arrays also support broadcasting, which allows arithmetic 
+operations between two arrays having a different number of dimensions,
+but compatible shapes. Let's look at an example to see how it works.
+"""
+arr2 = np.array([
+    [1, 2, 3, 4], 
+    [5, 6, 7, 8], 
+    [9, 1, 2, 3]
+]) 
+
+arr4 = np.array([4, 5, 6, 7]) 
+res = arr2 + arr4
+print(res)
