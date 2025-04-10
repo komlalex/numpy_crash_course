@@ -55,9 +55,9 @@ def crop_yield(region, weights):
         result += x * w 
     return result  
 
-print(crop_yield(kanto, weights))
-print(crop_yield(johto, weights))
-print(crop_yield(sinnoh, weights)) 
+#print(crop_yield(kanto, weights))
+#print(crop_yield(johto, weights))
+#print(crop_yield(sinnoh, weights)) 
 
 """Going from Python Lists to Numpy Arrays 
 The calculation performed by the crop_yield (element-wise multiplication of two vectors, and 
@@ -80,3 +80,61 @@ weights = np.array([w1, w2, w3])
 
 """Just like lists, Numpy arrays support the indexing notation []""" 
 print(weights[0])
+
+"""Operating on Numpy Arrays 
+We can compute the dot product of the two vectors using the np.dot function
+"""
+#help(np.dot) 
+kanto_yield_apples = np.dot(kanto, weights)
+print(kanto_yield_apples) 
+
+"""We can achieve the same result with lower level operations supported by 
+Numpy arrays; performing an element-wise multiplication and calculating the sum 
+of the resulting numbers.""" 
+kanto_yield_apples = (kanto * weights).sum() 
+print(kanto_yield_apples)
+
+"""The * operator performs an element-wise multiplication of the two 
+arrays (assuming they have the same size), and the sum method calculates the 
+sum of the numbers in an array.""" 
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([4, 5, 6]) 
+
+#print(arr1 * arr2)
+#print(arr2.sum()) 
+
+"""Benefits of using Numpy arrays 
+There are a couple of important benefits of using Numpy arrays instead 
+of Python lists for operating on numerical data. 
+
+* Ease of use: You can write small, concise and intuitive mathematical expressions 
+like (kanto * weights).sum() rather than using loops & custom functions like crop_yield. 
+* Performance: Numpy operatons and functions are implemented internally in C++, which 
+makes them much faster using Python statements & loops which are interpreted at the runtime.
+
+Here's a quick comparison of dot products done of vectors with a million elements
+using Python loops vs. Numpy arrays.""" 
+from timeit import default_timer as timer 
+def print_duration(start_time, end_time): 
+    duration = end_time - start_time 
+    print(f"\33[33mCompleted in {duration} minutes")
+# Python lists
+arr1 = list(range(1_000_000)) 
+arr2 = list(range(1_000_000, 2_000_000)) 
+
+# Numpy arrays 
+arr1_np = np.array(arr1)
+arr2_np = np.array(arr2) 
+
+result = 0 
+start_time = timer()
+for x1, x2 in zip(arr1, arr2):
+    result += x1*x2 
+print(result)
+end_time = timer() 
+print_duration(start_time, end_time) 
+
+start_time = timer()
+result = np.dot(arr1_np, arr2_np)
+end_time = timer() 
+print_duration(start_time, end_time)
