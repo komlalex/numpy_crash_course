@@ -311,4 +311,41 @@ arrays using sum method. Remember that True evaluates to 1 and False
 evalautes to 0 when booleans are used in arithmetic operations.
 """
 res = (arr1 == arr2).sum()
-print(res)
+
+"""
+Numpy extends Python's list indexing notation using [] to multiple 
+dimensions in a fairly intuitive fasion. You can provide a comma seperated list of indices or ranges to 
+select a specific element or subarray (also called slice) from a numpy array. 
+"""
+arr3 = np.array([
+    [
+        [11, 12, 13, 14], 
+        [13, 14, 15, 19]
+    ],
+
+    [
+        [15, 16, 17, 18], 
+        [63, 92, 36, 18], 
+    ], 
+
+    [
+        [98, 32, 81, 23], 
+        [17, 18, 19.5, 43]
+    ]
+])
+
+"Single element" 
+res = arr3[1, 1, 2] 
+
+"""Subarray using ranges"""
+res = arr3[1:, 0:1, :2]
+
+"""Mixing indices and ranges""" 
+res = arr3[1:, 1, 3] 
+
+"""Mixing indices and ranges""" 
+res = arr3[1:, 1, :3] 
+
+"""Using fewer indices""" 
+res = arr3[1]
+print(res)  
