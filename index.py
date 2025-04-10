@@ -130,11 +130,107 @@ result = 0
 start_time = timer()
 for x1, x2 in zip(arr1, arr2):
     result += x1*x2 
-print(result)
 end_time = timer() 
-print_duration(start_time, end_time) 
+#print(result)
+#print_duration(start_time, end_time) 
 
 start_time = timer()
 result = np.dot(arr1_np, arr2_np)
 end_time = timer() 
-print_duration(start_time, end_time)
+#print(result)
+#print_duration(start_time, end_time) 
+
+"""As you can see, using np.dot is 100 times faster than using for a for loop.
+This makes Numpy especially useful while working with really large datasets with 
+tens of thousands or millions of data points""" 
+
+
+"""Multi-dimensional Numpy arrays
+We can now go one step further, and represent the climatic data for all the regions
+together using a single 2-dimensional Numpy array
+"""
+climatic_data = np.array([[73, 67, 43], 
+                          [91, 88, 64], 
+                          [87, 134, 58], 
+                          [102, 43, 37], 
+                          [69, 96, 70]]) 
+
+"""Numpy arrays can have a number of dimensions, and different lengths along 
+each dimension using the .shape property of an array
+"""
+#print(climatic_data.shape) 
+#print(weights.shape) 
+
+arr3 = np.array([ 
+    [[11, 12, 13], 
+     [14, 15, 16]], 
+
+     [[15, 16, 17], 
+      [18, 19, 20]]
+])
+#print(arr3.shape) 
+
+"""
+All elements in a numpy array have the same datatype. You can check the type of "
+an array using the .dtype property.
+"""
+#print(climatic_data.dtype)
+#print(weights.dtype) 
+
+"""If an array contains a single floating point number, all the 
+elements are also coverted to floats.
+""" 
+
+
+""""
+We can now compute the predicted yields of apples in all the regions, using 
+a  single matrix multiplication between climatic_data (a 5x3 matrix) and weights (a vector of length 3). 
+
+We can use the np.matmul function from Numpy, or simply use the @ operator to 
+perform the matrix multiplication
+"""
+all_apple_yields = np.matmul(climatic_data, weights) 
+#print(all_apple_yields)
+all_apple_yields = climatic_data @ weights 
+#print(all_apple_yields) 
+
+"""Numpy also provides helper functions for reading & writing to files. 
+Let's download climatic.txt which contains 10, 000 climatic data (temp., rainfall & humidity) 
+in the the following format: 
+
+temperature, rainfall, humidity
+25.00, 76.00, 99.00
+39.00, 65.00, 70.00
+59.00, 45.00, 77.00 
+...
+
+This format of storing data is known as comma seperated values or CSV
+"""
+from  urllib import request
+import os 
+
+def download_dataset():
+    if os.path.exists("data/climate.txt"):
+        print("Already exists. Skipping download.") 
+    else: 
+        request.urlretrieve('https://gist.github.com/BirajCoder/a4ffcb76fd6fb221d76ac2ee2b8584e9/raw/4054f90adfd361b7aa4255e99c2e874664094cea/climate.csv', "data/climate.txt")
+
+download_dataset() 
+
+climate_data = np.genfromtxt("data/climate.txt", delimiter=",", skip_header=1) 
+#print(climate_data.shape)
+print(climate_data[0])
+
+"""We can now use a matrix multiplication operator @ to predict the yield 
+of apples for the entire dataset using a given set of weights.
+"""
+weights = np.array([0.3, 0.2, 0.5]) 
+yields = climate_data @ weights 
+print(yields.shape)
+
+"""
+We can now add the yields back to the climate_data as a fourth column 
+using the np.concatenate function
+"""
+climate_results = np.concatenate((climate_data, yields.reshape(10000, 1)), axis=1)
+print(climate_results)
