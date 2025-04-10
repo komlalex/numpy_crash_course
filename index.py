@@ -291,5 +291,24 @@ arr2 = np.array([
 ]) 
 
 arr4 = np.array([4, 5, 6, 7]) 
-res = arr2 + arr4
+res = arr2 + arr4 
+
+"""
+Comparism Operators
+Numpy also supports comparism operations like ==, !=, > etc. 
+The result is an array of booleans.
+"""
+arr1 = np.array([[1, 2, 3], [3, 4, 5]]) 
+arr2 = np.array([[2, 2, 3], [1, 2, 5]])
+
+res = arr1 == arr2 
+res = arr1 != arr2 
+res = arr1 >= arr2 
+res = arr1 < arr2 
+
+"""A common use case is to count the number of equal elements in two 
+arrays using sum method. Remember that True evaluates to 1 and False 
+evalautes to 0 when booleans are used in arithmetic operations.
+"""
+res = (arr1 == arr2).sum()
 print(res)
