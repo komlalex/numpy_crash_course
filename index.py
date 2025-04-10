@@ -364,7 +364,7 @@ res = np.ones((2, 2, 3))
 res = np.eye(3) 
 
 """Random vector"""
-res1 = np.random.rand(5) 
+res = np.random.rand(5) 
 
 """Random matrix"""
 res = np.random.randn(2, 3)
@@ -373,8 +373,8 @@ res = np.random.randn(2, 3)
 res = np.full([2, 3], 42)
 
 """Range with start, end and step """
-res = np.arange(10, 90, 3) 
+res1 = np.arange(10, 90, 3).reshape(3, 3, -1)
 
 """Equally spaced numbers in a range"""
 res = np.linspace(3, 27, 9)
-print(res)  
+print(res1)  
