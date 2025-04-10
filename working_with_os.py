@@ -200,4 +200,19 @@ def compute_emis(loans):
     return loans 
 
 loans2 = compute_emis(loans2)
-print(loans2)
+
+"""Writing to files
+Now that we have performed some processing on the data, it would be a good idea to write the 
+results back to a file in the CSV format. We can do this by creating/opening a file in write mode
+with open and using the .write method of the file object. The string format 
+method will be useful """ 
+
+with open("./loans/emis2.txt", "w") as f: 
+    for loan in loans2: 
+        f.write(f"{loan["amount"]}, {loan["duration"]}, {loan["rate"]}, {loan["down_payment"]}, {loan["emi"]}\n")
+
+"Let's verify that the file was created and written to as expected" 
+created = "emis2.txt" in os.listdir("./loans") 
+
+with open("./loans/emis2.txt", "r") as f: 
+    print(f.read())
