@@ -348,4 +348,33 @@ res = arr3[1:, 1, :3]
 
 """Using fewer indices""" 
 res = arr3[1]
+
+"""Other ways of creating creating Numpy arrays 
+Numpy also provides some handy functions to create arrays 
+of a desired shape with fixed or random values.
+"""
+
+"""All zeros"""
+res = np.zeros((3, 2)) 
+
+"""All ones"""
+res = np.ones((2, 2, 3)) 
+
+"""Indentity matrix"""
+res = np.eye(3) 
+
+"""Random vector"""
+res1 = np.random.rand(5) 
+
+"""Random matrix"""
+res = np.random.randn(2, 3)
+
+"""Fixed value"""
+res = np.full([2, 3], 42)
+
+"""Range with start, end and step """
+res = np.arange(10, 90, 3) 
+
+"""Equally spaced numbers in a range"""
+res = np.linspace(3, 27, 9)
 print(res)  
